@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Predictions</title>
+</head>
+<body>
+    <h1>AI Predictions for Reservations</h1>
+    <div>
+        <h2>Predict Head Count</h2>
+        <label for="hour">Hour:</label>
+        <input type="number" id="hour" name="hour">
+        <label for="day_of_week">Day of Week:</label>
+        <input type="number" id="day_of_week" name="day_of_week">
+        <button onclick="predictHeadCount()">Predict</button>
+        <p id="head_count_result"></p>
+    </div>
+
+    <div>
+        <h2>Predict Reservation Frequency</h2>
+        <label for="week">Week:</label>
+        <input type="number" id="week" name="week">
+        <button onclick="predictReservationFrequency()">Predict</button>
+        <p id="reservation_frequency_result"></p>
+    </div>
+
+    <script>
+        async function predictHeadCount() {
+            const hour = document.getElementById('hour').value;
+            const day_of_week = document.getElementById('day_of_week').value;
+            const response = await fetch(`/predict_head_count?hour=${hour}&day_of_week=${day_of_week}`);
+            const data = await response.json();
+            document.getElementById('head_count_result').innerText = `Predicted Head Count: ${data.predicted_head_count}`;
+        }
+
+        async function predictReservationFrequency() {
+            const week = document.getElementById('week').value;
+            const response = await fetch(`/predict_reservation_frequency?week=${week}`);
+            const data = await response.json();
+            document.getElementById('reservation_frequency_result').innerText = `Predicted Reservations: ${data.predicted_reservations}`;
+        }
+    </script>
+</body>
+</html>
